@@ -1,6 +1,6 @@
 pipeline {
-    agent any
-    
+    agent any  // This provides the node context for all steps
+
     parameters {
         choice(
             name: 'BROWSER',
@@ -13,20 +13,19 @@ pipeline {
             description: 'Specific tags to run (optional)'
         )
     }
-    
+
     environment {
         SAUCE_USERNAME = credentials('oauth-anwarharoon1307-33a73')
         SAUCE_ACCESS_KEY = credentials('0c5e43da-fb50-423b-820f-747ce93e682e')
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', 
-                url: 'https://github.com/muhammadharoon-01/crm.git'
+                checkout scm  // No need for node block when agent any is defined
             }
         }
-        
+
         stage('Setup') {
             steps {
                 sh '''
@@ -37,7 +36,7 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Run Tests') {
             steps {
                 script {
@@ -51,7 +50,7 @@ pipeline {
                 always {
                     // Archive test results
                     robot outputPath: '.', passThreshold: 80.0, unstableThreshold: 60.0
-                    
+
                     // Publish HTML report
                     publishHTML([
                         allowMissing: false,
@@ -65,11 +64,10 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always {
-            // Clean up workspace
-            cleanWs()
+            cleanWs()  // This can stay outside node when agent is defined
         }
     }
 }
