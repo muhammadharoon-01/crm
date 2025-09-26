@@ -12,13 +12,11 @@ Test Setup          Begin Web Test
 Test Teardown       End Web Test
 
 *** Variables ***
-${BROWSER} =                    chrome
-${URL} =                        https://automationplayground.com/crm/
-${VALID_LOGIN_EMAIL} =          abc@gmail.com
-${VALID_LOGIN_PASSWORD} =       abc@g
+${VALID_LOGIN_EMAIL} =      abc@gmail.com
+${VALID_LOGIN_PASSWORD} =   abc@g
 
-#Add Customer Fields
-${ADD_CUSTOMER_EMAIL} =             janedoe#gmail.com
+#Add Customer Fields (FIXED THE EMAIL SYNTAX ERROR)
+${ADD_CUSTOMER_EMAIL} =             janedoe@gmail.com
 ${ADD_CUSTOMER_FIRST_NAME} =        Jane
 ${ADD_CUSTOMER_LAST_NAME} =         Doe
 ${ADD_CUSTOMER_CITY} =              Dallas
